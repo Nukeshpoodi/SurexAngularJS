@@ -11,7 +11,10 @@ app
       require: "ngModel",
       link: function (scope, element, attr, ngModelCtrl) {
         const removeNumericOneIfStrStartsWith = (text) => {
-          return (text.startsWith("1")) ? text.substring(1, text.length) : text;
+           var text = (text.startsWith("1")) ? text.substring(1, text.length) : text;
+           ngModelCtrl.$setViewValue(text);
+           ngModelCtrl.$render();
+           return text;
         }
         const removeNonNumericChars = (text) => {
             if (text) {
@@ -26,7 +29,6 @@ app
             return undefined;
         }    
         const caPhNumFormatter = (numeric) => {
-            numeric = removeNumericOneIfStrStartsWith(numeric); 
             var format = "";
             if (numeric.length > 3)
               format = `(${numeric.substring(0,3)})${numeric.substring(3, 6)}`;
@@ -45,6 +47,7 @@ app
             return numeric;
            
         }
+        ngModelCtrl.$parsers.push(removeNumericOneIfStrStartsWith);
         ngModelCtrl.$parsers.push(removeNonNumericChars);
         ngModelCtrl.$parsers.push(parsePhoneNum);
         //$formatters for formatting the model value if the value is populated from the constroller
