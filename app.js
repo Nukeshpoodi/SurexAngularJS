@@ -13,8 +13,7 @@ app
 
         const removeNonNumericChars = (text) => {
             if (text) {
-                var numeric = text.replace(/^1|[^0-9]/g, '');
-                numeric = (numeric.length > 10) ? numeric.substring(0, 10) : numeric;
+                var numeric = text.replace(/^1|[^0-9]/g, '').substring(0, 10);
                 if (numeric !== text) {
                     ngModelCtrl.$setViewValue(numeric);
                     ngModelCtrl.$render();
@@ -38,8 +37,8 @@ app
             ngModelCtrl.$viewValue = caPhNumFormatter(numeric);
             ngModelCtrl.$render();
             return numeric;
-           
         }
+
         ngModelCtrl.$parsers.push(removeNonNumericChars);
         ngModelCtrl.$parsers.push(parsePhoneNum);
         //$formatters for formatting the model value if the value is populated from the constroller
