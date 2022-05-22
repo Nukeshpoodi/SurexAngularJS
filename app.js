@@ -10,15 +10,10 @@ app
       restrict: "A",
       require: "ngModel",
       link: function (scope, element, attr, ngModelCtrl) {
-        const removeNumericOneIfStrStartsWith = (text) => {
-           var text = (text.startsWith("1")) ? text.substring(1, text.length) : text;
-           ngModelCtrl.$setViewValue(text);
-           ngModelCtrl.$render();
-           return text;
-        }
+
         const removeNonNumericChars = (text) => {
             if (text) {
-                var numeric = text.replace(/[^0-9]/g, '');
+                var numeric = text.replace(/^1|[^0-9]/g, '');
                 numeric = (numeric.length > 10) ? numeric.substring(0, 10) : numeric;
                 if (numeric !== text) {
                     ngModelCtrl.$setViewValue(numeric);
@@ -45,7 +40,6 @@ app
             return numeric;
            
         }
-        ngModelCtrl.$parsers.push(removeNumericOneIfStrStartsWith);
         ngModelCtrl.$parsers.push(removeNonNumericChars);
         ngModelCtrl.$parsers.push(parsePhoneNum);
         //$formatters for formatting the model value if the value is populated from the constroller
