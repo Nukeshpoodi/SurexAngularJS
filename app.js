@@ -19,7 +19,7 @@ app
         const removeNonNumericChars = (text) => {
             if (text) {
                 var numeric = text.replace(/[^0-9]/g, '');
-                numeric = (numeric > 10) ? numeric.substring(0, 10) : numeric;
+                numeric = (numeric.length > 10) ? numeric.substring(0, 10) : numeric;
                 if (numeric !== text) {
                     ngModelCtrl.$setViewValue(numeric);
                     ngModelCtrl.$render();
@@ -29,11 +29,9 @@ app
             return undefined;
         }    
         const caPhNumFormatter = (numeric) => {
-            var format = "";
+            var format = numeric;
             if (numeric.length > 3)
               format = `(${numeric.substring(0,3)})${numeric.substring(3, 6)}`;
-            else 
-              format = numeric;
 
             if (numeric.length > 6) 
               format = `${format}-${numeric.substring(6, numeric.length)}`;
