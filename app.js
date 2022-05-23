@@ -45,8 +45,27 @@ app
         ngModelCtrl.$formatters.push(caPhNumFormatter);
       },
     };
-  });
+  }).directive('sampleDirective', SampleDirective);
 
 
-   
-
+  function SampleDirective() {
+    return {
+      restrict: 'E',
+      templateUrl: 'sample.html',
+      scope: {
+        ngModel: '='
+      },
+      require: '^?ngModel',
+      link: function($scope) {
+          // Watch expression
+          $scope.$watch('sample', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+          console.log('Value has changed to: ' + newValue);
+          }
+        });
+      },
+      // controller: function($scope){
+      //   $scope.sample = 'test';
+      // } 
+    }
+  }
